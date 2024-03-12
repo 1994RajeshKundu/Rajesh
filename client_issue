@@ -1,0 +1,294 @@
+Remote Copy --> From Cyber Ark Login in Target server
+\\Source server ip\c$\
+CURL Path: C:\Windows\System32
+
+Command Prompt:
+findstr /C:"Tag" /C:"invoke" /C:"module" IssueHaleon.txt
+systeminfo | findstr /B /C:"OS Name" /C:"OS Version" 
+
+
+Ansible enable:
+Enable-PSRemoting -Force
+
+New-NetFirewallRule -Name "Allow WinRM HTTPS" -DisplayName "WinRM HTTPS" -Enabled True -Profile Any -Action Allow -Direction Inbound -LocalPort 5986 -Protocol TCP
+
+$thumbprint = (New-SelfSignedCertificate -DnsName $env:COMPUTERNAME -CertStoreLocation Cert:\LocalMachine\My).Thumbprint
+
+$command = "winrm create winrm/config/Listener?Address=*+Transport=HTTPS @{Hostname=""$env:computername""; CertificateThumbprint=""$thumbprint""}"
+---
+winrm invoke Restore winrm/Config
+winrm quickconfig
+winrm quickconfig -q
+winrm set winrm/config/winrs ‘@{MaxMemoryPerShellMB=”512″}’
+winrm set winrm/config ‘@{MaxTimeoutms=”1800000″}’
+winrm set winrm/config/service ‘@{AllowUnencrypted=”true”}’
+winrm set winrm/config/service/auth ‘@{Basic=”true”}’
+Start-Service WinRM
+set-service WinRM -StartupType Automatic
+
+Powershell:
+Add-Computer -ComputerName testwindowsVMDJ -DomainName "MYDIRECTV.com" -OUPath "OU=Dev,OU=Azure,OU=Servers,DC=mydirectv,DC=com"
+Get-AdComputer -Identity "it-2020"
+Move-ADObject -Itentity "<OU details>"  -TargetPath "<OU details>"
+Invoke-Command -ComputerName <Remote_Computer_Name> -ScriptBlock {Uninstall-WindowsFeature -Name Windows-Defender}
+Invoke-Command -ComputerName  UKSWNDSLM0002  -ScriptBlock {Start-Service -DisplayName "Windows Azure Guest Agent"}
+Get-TlsCipherSuite |Format-Table Name
+Get-WmiObject win32_Product|Where-Object { $_.name -eq "AppProtection"}|Select name,Version
+Import-Csv cost_analysis_report.csv| select InstanceName, ConsumedService , Currency ,SubscriptionName ,PretaxCodt, Product | Export-Csv -Path cost_analysis_report_edited.
+chotn_djoin_pass: "ro'h(C8(Lj73Q]H"
+Get-Service | select -property name,starttype,status | Where-Object {$_.starttype -eq "Automatic"} | Where-Object { $_.status -eq “stopped”}
+      foreach($service in $stoppedService)
+      {
+        try
+          {
+            Write-output "$service"
+            Start-Service -Name "$service"
+            write-output "Service has been started"
+          }
+        catch
+          {
+            Write-Output "$service threw an exception"
+            Write-Output $_
+          }
+      }
+	  
+Git:
+git log -p >> sample.txt
+git rebase -i HEAD~4
+git reset --hard HEAD~1
+<============IMP AZ command=========>
+az login --service-principal -u ${app_id} -p ${password} --tenant ${tenant_id}
+Dev: az login --service-principal -u 31ec0bcb-91ac-4b37-a68e-5794c5044213 -p _av8Q~kPVCf6E76td7jjqMomRmnBNsZLh_I.EbJs --tenant d1e23d19-ded6-4d66-850c-0d4f35bf2edc
+Prod: a7h8Q~aRcE9q3r8ITWf-IoOZZUvKLiHJ-JSpiaZO 
+UAT: 1mP8Q~.3PJH4GhDeQeOPk1viiljHajjqyEUEgakg
+az login --service-principal -u 65e7e104-3105-4cbf-85de-85288fb8db51 -p 1mP8Q~.3PJH4GhDeQeOPk1viiljHajjqyEUEgakg --tenant d1e23d19-ded6-4d66-850c-0d4f35bf2edc
+PAE:az login --service-principal -u e4bc1a29-0169-45bb-a99b-3e239e41c3e9 -p rjw8Q~oelOuCEXPUEAao-nqmaaXVKMe3mMTMpczT --tenant d1e23d19-ded6-4d66-850c-0d4f35bf2edc
+Marcopolo: az login --service-principal -u 46f7b18e-44bd-4b1b-af4d-cdac9a775b4c -p bSW8Q~nr6WJMEuUdEdPslYbI6DJ1YZmE~vr1najS  --tenant d1e23d19-ded6-4d66-850c-0d4f35bf2edc
+Marcopolo Dev: az login --service-principal -u 8581f1a1-89fb-4315-95d1-da2782d3761c -p 2Ae8Q~JrBWHdLaJInDzl.u~yyzXexUTp1RsORbpP --tenant d1e23d19-ded6-4d66-850c-0d4f35bf2edc
+sp-ch-ChSapApplicationsMarcopolo-dev
+az storage account keys list --resource-group CORP-PLATFORMS-MGT-TF-PROD --account-name uksautobinprod01 --query '[0].value' -o tsv
+az disk list --subscription "{{item}}" --query "[?diskState=='Unattached'].{Name:name, Disk_State:diskState, Resource_Group:resourceGroup, Subscription:'{{
+}}'}" --output json
+az storage blob download --account-name  dtvtfstatefile  --container-name packages-microsoft-prod.rpm  --name microsoft.asc  --file packages-microsoft-prod.rpm  --auth-mode login
+# az backup protection resume --vault-name CHSAPprodRecoveryServicesVault01 --resource-group ch-sap-applications-prod-am01-rg01 --container-name am01awfim321 --backup-management-type AzureIaasVM --item-name am01awfim321 --policy-name BackupPolicy5
+az disk delete --name am01wndmwz0014_datadisk001 --resource-group CH-CORP-DEVTEST-AM01-WST-RG01 --yes
+az disk delete --name am01wndmwz0014_datadisk002 --resource-group CH-CORP-DEVTEST-AM01-WST-RG01 --yes
+az disk delete --name am01wndmwz0014_datadisk003 --resource-group CH-CORP-DEVTEST-AM01-WST-RG01
+az disk delete --name am01wndmwz0014_datadisk004 --resource-group CH-CORP-DEVTEST-AM01-WST-RG01
+Get-AzDisk | ?{$_.ManagedBy -EQ $null} |Format-Table name => Where condition 
+
+netsh advfirewall firewall add rule name="Open Port 5001" dir=in action=allow protocol=TCP localport=5001
+
+Image Details:
+Get-AzVMImageSku -Location eastus  -PublisherName 'RedHat' -Offer 'RHEL' 
+Get-AzVMImageOffer -Location eastus -PublisherName 'center-for-internet-security-inc' | Select Offer 
+az vm image accept-terms --offer "cis-rhel9-l1" --plan "cis-rhel9-l1-gen2" --publisher "center-for-internet-security-inc"   
+wget -o /tmp/vsts-agent-linux-x64-3.234.0.tar.gz https://vstsagentpackage.azureedge.net/agent/3.234.0/vsts-agent-linux-x64-3.234.0.tar.gz
+tasklist /v > 1.txt & 1.txt
+netstat -ano | findstr "5001"
+
+
+https://download.microsoft.com/download/7/1/0/7105C7FF-768E-4472-AFD5-F29108D1E383/NM34_x64.exe
+tcp.port==5001 or tcp.port==445
+tnc ipaddress -p 445
+Get-Process|Where-Object {$_.ProcessName -eq "OUTLOOK"}
+iperf3.exe -s -p 5001
+netsh advfirewall firewall add rule name="ICMP Allow incoming V4 echo request" protocol=icmpv4:8,any dir=in action=allow
+Get-LocalUser|select name, sid|ft
+Move-AzResource `
+    -DestinationResourceGroupName $targetRG `
+    -ResourceId $resource.id `
+    -Force
+az vm show --subscription 2e8b714f-b4cc-4a87-a3df-437201815c02 --resource-group ch-corp-devtest-am01-gof-rg01 --name am01lxdora0010 -d --query "{Name: name, Size: hardwareProfile.vmSize, State: powerState}" --output table
+	
+
+module.deployment.azurerm_windows_virtual_machine.windows_vms[\"am01awtop321\"]
+
+Get-TlsCipherSuite |format-table name
+
+SCTASK0666976 : DNS Add-Modify-Delete Entry
+Rubrik Install:
+https://10.23.117.156/connector/RubrikBackupService.zip
+
+https://10.24.34.32/connector/RubrikBackupService.zip
+
+NOTE: Installing collections with ansible-galaxy is only supported in ansible 2.9+
+
+Tag Update:
+
+$Resources = Get-Content -path ./resource-id.csv
+
+foreach ($item in $Resources)
+{
+	az tag update --resource-id $item --operation  Delete --tags SUPPORTED_BY=NetApp-L2
+}
+$Resources = Get-Content -path ./resource-id.csv
+
+foreach ($item in $Resources)
+{
+az network vnet update --ids $item --dns-servers 10.22.2.38 33.53.2.1 33.53.1.1
+}
+az tag update --resource-id $resource --operation Delete --tags SUPPORTED_BY=RPA/EAP
+
+ Powershell.exe -File C:\my_path\yada_yada\run_import_script.ps1 Out-File -FilePath C:\FileName.log
+
+Alert Doc: https://ts.accenture.com/:w:/r/sites/GSKNewCoAzureWindows/_layouts/15/Doc.aspx?sourcedoc=%7B2D36C87C-0DE6-4243-9E53-A5449DCC0A96%7D&file=IAAS%20Alerts%20Resolution.docx&action=default&mobileredirect=true
+
+Tenable install: 
+msiexec /i C:\temp\Install-Win\TenableAgent\NessusAgent-10.4.2-x64.msi /qn
+"c:\Program Files\Tenable\Nessus Agent\nessuscli.exe" agent link --cloud --key=dea01d3d09ad4b1428b0c0e780baba107d0aea9a5198180adb53342b0ce5b7ce
+
+Relink:===>
+Need to relink nessus agent. Agent is not install or broken
+ 
+For Windows: Navigate to ‘C:\Program Files\Tenable\Nessus Agent
+For Linux: Navigate to ‘/opt/nessus_agent/sbin/nessuscli’
+For MacOS: Navigate to ‘sudo /Library/NessusAgent/run/sbin/nessuscli’
+_______________________________________________________________________________________________________________
+To link an agent, run this command:
+nessuscli agent link --key=dea01d3d09ad4b1428b0c0e780baba107d0aea9a5198180adb53342b0ce5b7ce --host=http://sensor.cloud.tenable.com  --port=443
+To un-link an agent, run this command:
+nessuscli agent unlink
+To reset and update plugins, run this command:
+nessuscli plugins --reset
+To check the status of the agent, run this command:
+nessuscli plugins status
+ 
+ 
+To check the status:
+nessuscli plugins status
+Tenable
+[7:14 PM] Devanand Devdas, Shubham
+go to thise regedit path "HKLM:\SOFTWARE\Tenable" and delete "TAG" 
+go to tenable path under # C:\Program` Files\Tenable\Nessus` Agent
+execute relink command # nessuscli agent link --cloud --key=dea01d3d09ad4b1428b0c0e780baba107d0aea9a5198180adb53342b0ce5b7ce"
+
+DNS Server Entries:
+===================
+$subName = "<Subscription Name>"  
+$rgName = "<Resource Group Name>"  
+$vNetName = "<vNet Name>"  
+$DNSIPs = "192.168.1.10", "192.168.1.11", "192.168.1.12" #Modify as necessary.  
+     Login-AzureRmAccount  
+Select-AzureRmSubscription -SubscriptionName $subName  
+     $vnet = Get-AzureRmVirtualNetwork -ResourceGroupName $rgName -name $vNetName  
+     $vnet.DhcpOptions.DnsServers = $null  
+     foreach ($IP in $DNSIPs)  
+{  
+$vnet.DhcpOptions.DnsServers += $IP  
+}  
+     Set-AzureRmVirtualNetwork -VirtualNetwork $vnet
+	 
+	 
+	 
+Linux:
+========
+setfacl -R -m u:splunk:r /var/log/*
+/opt/splunkforwarder/bin/splunk enable boot-start -user splunk 
+ getfacl /var/log
+ getenforce reports whether SELinux is enforcing, permissive, or disabled
+ 
+ https://microsoftlearning.github.io/implement-security-through-pipeline-using-devops/Instructions/Labs/APL2001_M02_L02_Managed_Identity_for_Projects_and_Pipelines.html
+
+/var/log/messages=> Log of user activity
+
+If the server host key is in the known_hosts file:
+
+ssh user@host: no prompt & no error (because host is in known_hosts)
+ssh -o StrictHostKeyChecking=no user@host: no prompt & no error
+ 
+
+If the server host key is not in the known_hosts file:
+
+ssh user@host: prompt & display error Host key verification failed.
+ssh -o StrictHostKeyChecking=no user@host: no prompt & no error & add new key to known_hosts file
+DevOps Agent Configuration:
+https://www.coachdevops.com/2023/01/how-to-setup-self-hosted-linux-agent-in.html
+Stages-> -stage ->Jobs -> -Job -> Steps -> -Script,-task(Input)
+ssh -T git@ssh.dev.azure.com
+
+
+$Resources = Get-Content -path ./resource-id.csv
+
+foreach ($item in $Resources)
+{
+az network vnet update  --ids /subscriptions/2e8b714f-b4cc-4a87-a3df-437201815c02/resourceGroups/ch-corp-vnet00001-devtest/providers/Microsoft.Network/virtualNetworks/ch-devtest-vnet0001-am02 --dns-servers 10.22.2.38 10.23.2.37 10.22.66.36
+}
+
+Group Policy:
+gpupdate
+gpresult /Scope Computer /v
+
+Log Analytics:
+Get-AzureRmVMExtension -ResourceGroupName "ch-corp-devtest-am01-wst-rg01" -VMName "am01wndmwz0014" -Name "MicrosoftMonitoringAgent"
+Remove-AzureRmVMExtension -ResourceGroupName ch-corp-devtest-am01-wst-rg01 -VMName am01wndmwz0014  -Name ‘MicrosoftMonitoringAgent’
+$PublicSettings = @{"workspaceId" = "<ID of Log Analytics Workspace>"}
+$ProtectedSettings = @{"workspaceKey" = "<Key of Log Analytics workspace>"}
+ 
+Set-AzVMExtension -ExtensionName "MicrosoftMonitoringAgent" -ResourceGroupName "ch-corp-devtest-am01-wst-rg01" `-VMName "am01wndmwz0014" `-Publisher "Microsoft.EnterpriseCloud.Monitoring" `-ExtensionType "MicrosoftMonitoringAgent" `-TypeHandlerVersion 1.0 `-Settings $PublicSettings `-ProtectedSettings $ProtectedSettings `-Location eastus
+ip =$(hostname -i)
+az storage account network-rule add --resource-group 32315-eastus2-prod-infra-nsg-flowlogs-rg --account-name stdtvinfraprodeastus2001 --ip-address $ip
+
+scripts="https://my-script-url.net/customize_script.sh"
+imagesource="center-for-internet-security-inc:cis-windows-server-2019-v1-0-0-l2:cis-ws2019-l2:latest"
+az image builder create --image-source $imagesource -n myTemplate -g 32315-prod-infra-goldenimage_gallery-rg  --managed-image-destinations /subscriptions/2b3bcf21-e20b-49c4-b12c-cec866639365/resourceGroups/32315-prod-infra-goldenimage_gallery-rg/providers/Microsoft.Compute/galleries/image_gallery/images/CIS2_Windows_2019=westus  --shared-image-destinations /subscriptions/2b3bcf21-e20b-49c4-b12c-cec866639365/resourceGroups/32315-prod-infra-goldenimage_gallery-rg/providers/Microsoft.Compute/galleries/image_gallery/images/CIS2_Windows_2019=westus,brazilsouth   --identity aibBuiUserId1704454177 --staging-resource-group 32315-prod-infra-goldenimage_gallery-rg
+az image builder show -n mytemplate1 -g IT_32315-prod-infra-goldenimage_gallery-rg__55adbe64-0236-413a-a806-6bbc8251953b
+Register-AzProviderFeature -FeatureName "EncryptionAtHost" -ProviderNamespace "Microsoft.Compute"
+az vm update -n ACE1P32315UL001 -g 32315-eastus-prod-infra-jumphost-rg --set securityProfile.encryptionAtHost=true
+az vm show -n ACE1P32315UL001 -g 32315-eastus-prod-infra-jumphost-rg --query [securityProfile.encryptionAtHost] -o tsv
+az resource list --output tsv --query "[].{name:name, resourceGroup:resourceGroup, type:type,  location:location, createdTime:createdTime }" >> Report.csv
+az resource list --output tsv --query "[].{name:name,type:type,  location:location, createdTime:createdTime }" >> Report.csv
+
+tnc 10.130.10.134 -port 53
+Autostart agent service: ‘sudo ./svc.sh install’ && ‘sudo ./svc.sh start’
+lpir3ndkxaont5ttjn6b6jfw6625qg23omnwuktva22hgtcnj5uq
+WAAGENT:https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/update-linux-agent?tabs=ubuntu
+
+Expand-Archive -Path "C:\Users\rajesh.a.kundu\Downloads\splunkforwarder-9.0.6-050c9bca8588-x64-release.zip" -DestinationPath "C:\temp"
+DTV access_key           ="HrFxSVMdJACRD5CEKNudfDoP1EGpxHpyjWhFoPyLyKRlunkuFY0fjzfJnc2nY8l7TknVZ7Jlg1pT+AStOd8EgQ=="
+
+KQL quries:Latest resource configuration for resources created in the last seven days
+resourcechanges
+| extend targetResourceId = tostring(properties.targetResourceId), changeType = tostring(properties.changeType), changeTime = todatetime(properties.changeAttributes.timestamp)
+| where changeTime > ago(7d) and changeType == "Create"
+| project  targetResourceId, changeType, changeTime
+| join ( Resources | extend targetResourceId=id) on targetResourceId
+| order by changeTime desc
+| project changeTime, changeType, id, resourceGroup, type, properties
+
+==============================
+AWS
+aws ec2 describe-images --image-ids ami-0664a6b2e99c841bf --region us-west-2 --query "Images[*].BlockDeviceMappings" 
+aws ec2 describe-snapshots --snapshot-ids "snap-05eddec8f2fbef1ea"  --region us-west-2
+aws kms describe-key --key-id "25bb0b35-c5fe-4eb3-9abf-6acf28c7f6e1"  --region us-west-2
+Invoke-WebRequest -Uri "https://download.splunk.com/products/universalforwarder/releases/9.0.6/windows/splunkforwarder-9.0.6-050c9bca8588-x64-release.msi" -OutFile  C:\tmp\splunk\splunksplunkforwarder-9.0.6-050c9bca8588-x64-release.msi
+
+
+SSH uninstall and install in Ubuntu==>
+dpkg --listfiles openssh-client
+sudo apt-get --purge remove openssh-client openssh-server
+sudo apt install openssh-server
+sudo systemctl enable --now ssh
+sudo systemctl status ssh
+sudo systemctl disable ssh
+sudo ufw allow ssh
+
+Packer install and plugins add ==>
+Step 1: Update the System.
+apt-get update
+Step 2: Install Docker.
+apt-get install docker.io
+Start docker service.
+systemctl start docker
+Step 3: Install Packer on System.
+Add Key.
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+Add the Repository.
+apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+Update the packages.
+apt-get update
+Install Packer.
+apt-get install packer
+Check Packer version.
+packer -version
+packer plugins install github.com/hashicorp/azure ->in the Build Directory
